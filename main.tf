@@ -7,8 +7,8 @@ provider "archive" {}
 
 data "archive_file" "zip" {
   type        = "zip"
-  source_file = "hello_lambda.py"
-  output_path = "hello_lambda.zip"
+  source_file = "validator_lambda.py"
+  output_path = "validator_lambda.zip"
 }
 
 data "aws_iam_policy_document" "policy" {
@@ -37,7 +37,7 @@ resource "aws_lambda_function" "lambda" {
   source_code_hash = "${data.archive_file.zip.output_base64sha256}"
 
   role    = "${aws_iam_role.iam_for_lambda.arn}"
-  handler = "lambda.lambda_handler"
+  handler = "validator_lambda.lambda_handler"
   runtime = "python3.8"
 
   environment {
